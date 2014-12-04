@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pl" ng-app="KodujComApp">
+<head>
+    <title>Programowanie to przyszłość. Poznaj świat kodowania i nowych technologii!</title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Koduj.com jest skierowane dla wszystkich zainteresowanych nauką programowania. Naszym celem jest promocja nowych technologii, dzielenie się wiedzą i zwiększanie kompetencji uczniów, nauczycieli i wolontariuszy.">
+    <meta name="keywords" content="programowanie, kurs programowania, warsztaty programowania, nowe technologie, warsztaty, kodowanie, szkoła, informatyka, nauka programowania, języki programowania, programista, lekcje informatyki, kluby kodowania, klub programowania, programowanie gier komputerowych, robotyka, Java, C#, PHP, Delphi, C++, Scratch, program edukacyjny">
+    <meta name="author" content="Zespół Koduj.com">
+    <meta name="robots" content="index, follow">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/angular-carousel.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arimo:400,700"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-sanitize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-touch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+    <script src="js/jquery.tubular.1.0.js"></script>
+    <script src="js/angular-carousel.min.js"></script>
+    <script src="js/koduj.js"></script>
+
+    <script>
+        // Scrolling to the chosen section
+        $(document).ready(function () {
+            $('a[href*=#]').each(function () {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                        && location.hostname == this.hostname
+                        && this.hash.replace(/#/, '')) {
+                    var $targetId = $(this.hash), $targetAnchor = $('[name=' + this.hash.slice(1) + ']');
+                    var $target = $targetId.length ? $targetId : $targetAnchor.length ? $targetAnchor : false;
+                    if ($target) {
+                        
+                        var headerHeight = 60;
+                        var targetOffset = $target.offset().top - headerHeight;
+
+                        $(this).click(function () {
+                            $("#nav li a").removeClass("active");
+                            $(this).addClass('active');
+                            $('html, body').animate({scrollTop: targetOffset}, 1000);
+                            return false;
+                        });
+                    }
+                }
+            });
+        });
+
+        // Embed YouTube video as a intro section background
+        $(document).ready(function () {
+            $('#site_wrapper').tubular({videoId: 'NCKvy4NDLB4'}); // where idOfYourVideo is the YouTube ID.
+        });
+
+    </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55809539-1', 'auto');
+        ga('send', 'pageview');
+   </script>
+</head>
+
+<body ng-controller="MainController">
+<div id="site_wrapper">
+<!-- NAVIGATION BAR -->
+<header>
+    <div id="top"></div>
+    <div class="content">
+        <div id="logo">
+            <a href="#"><img src="assets/logo1.png" alt="Logo koduj.com"/></a>
+        </div>
+
+        <nav>
+            <ul>
+                <li id="nav-learn"><a href="#learn">ucz się</a></li>
+                <li id="nav-teach"><a href="#teach">ucz innych</a></li>
+                <li id="nav-why"><a href="#why">dlaczego warto</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- INTRODUCTORY VIDEO section -->
+<section id="intro">
+    <div class="content">
+        <div id="tagline">Programowanie to przyszłość</div>
+        <aside>Zacznij z nami!</aside>
+    </div>
+</section>
+
+<!-- LEARN section -->
+<div ng-controller="LearnController" class="learn">
+    <section id="learn" ng-hide="learnSectionIsHidden()" class="animation animation-left">
+        <div class="content">
+            <main>Chcesz programować?</main>
+            <aside>Poznaj miejsca, które Ci pomogą</aside>
+
+            <nav>
+                <figure id="online" ng-click="selectOnlineSection()">
+                    <div class="img"><img src="assets/online.png" alt="nauka online"/></div>
+                    <figcaption>ucz się<br>online</figcaption>
+                </figure>
+                <figure id="group" ng-click="selectGroupSection()">
+                    <div class="img"><img src="assets/group.png" alt="nauka w grupie"/></div>
+                    <figcaption>ucz się<br>w grupie</figcaption>
+                </figure>
+            </nav>
+        </div>
+    </section>
+
+    <section id="onlineSection" ng-show="onlineSectionIsChoosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideOnlineSection()"/>
+        <div class="content">
+            <ng-include src="'sekcje/ucz_sie_online.html'"/>
+        </div>
+    </section>
+
+    <section id="groupSection" ng-show="groupSectionIsChoosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideGroupSection()"/>
+        <div class="content">
+            <ng-include src="'sekcje/ucz_sie_w_grupie.html'"/>
+        </div>
+    </section>
+</div>
+
+<!-- TEACH section -->
+<div ng-controller="TeachController" class="teach">
+    <section id="teach" ng-hide="teachSectionIsHidden()" class="animation animation-left">
+        <div class="content">
+            <main>Chcesz rozwijać innych?</main>
+            <aside>Poznaj metody nauczania programowania</aside>
+
+            <nav>
+                <figure id="club" ng-click="selectClubSection()">
+                    <div class="img"><img src="assets/code_club.png" alt="klub kodowania"/></div>
+                    <figcaption>załóż klub<br>kodowania</figcaption>
+                </figure>
+                <figure id="workshops" ng-click="selectWorkshopsSection()">
+                    <div class="img"><img src="assets/workshops.png" alt="warsztaty kodowania"/></div>
+                    <figcaption>zorganizuj<br>warsztaty</figcaption>
+                </figure>
+            </nav>
+        </div>
+    </section>
+    <section id="clubSection" ng-show="clubSectionIsChosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideClubSection()"/>
+        
+        <div class="content">
+            <ng-include src="'sekcje/zaloz_klub_kodowania.html'"/>
+        </div>
+    </section>
+    
+    <section id="workshopsSection" ng-show="workshopsSectionIsChosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideWorkshopsSection()"/>
+        
+        <div class="content">
+            <ng-include src="'sekcje/zorganizuj_warsztaty.html'"/>
+        </div>
+    </section>
+</div>
+
+<!-- WHY section -->
+<div ng-controller="WhyController" class="why">
+    <section id="why" ng-hide="whySectionIsHidden()" class="animation animation-left">
+        <div class="content">
+            <main>Dlaczego warto?</main>
+            <aside>Poznaj korzyści z programowania.</aside>
+            <nav>
+                <figure id="language" ng-click="selectLanguageSection()">
+                    <div class="img"><img src="assets/language.png" alt="nauka online"/></div>
+                    <figcaption>Kodowanie<br>to trzeci język</figcaption>
+                </figure>
+                <figure id="poland" ng-click="selectPolandSection()">
+                    <div class="img"><img src="assets/poland.png" alt="nauka online"/></div>
+                    <figcaption>Polska potrzebuje<br>programistów</figcaption>
+                </figure>
+                <figure id="consumption" ng-click="selectConsumptionSection()">
+                    <div class="img"><img src="assets/consumption.png" alt="nauka online"/></div>
+                    <figcaption>Dosyć biernej<br>konsumpcji</figcaption>
+                </figure>
+            </nav>
+        </div>
+    </section>
+    <section id="languageSection" ng-show="languageSectionIsChosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideLanguageSection()"/>
+        <div class="content">
+            <ng-include src="'sekcje/kodowanie_to_trzeci_jezyk.html'"/>
+        </div>
+    </section>
+    
+    <section id="polandSection" ng-show="polandSectionIsChosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hidePolandSection()"/>
+        <div class="content">
+            <ng-include src="'sekcje/polska_potrzebuje_programistow.html'"/>
+        </div>
+        
+    </section>
+    
+    <section id="consumptionSection" ng-show="consumptionSectionIsChosen" class="animation animation-left">
+        <img src="assets/close.png" class="close" ng-click="hideConsumptionSection()"/>
+        <div class="content">
+            <ng-include src="'sekcje/dosyc_biernej_konsumpcji.html'" />
+        </div>
+    </section>
+</div>
+<!-- BE LIKE THEM section -->
+<section id="be_like_them">
+    <main>Bądź jak oni!</main>
+    <div class="content">
+        <ng-include src="'sekcje/badz_jak_oni.html'" />
+    </div>
+</section>
+
+<!-- SUPPORT section -->
+<!--
+    <section id="support">
+        <div class="content">
+            wspierają nas
+        </div>
+    </section>
+!-->
+
+<!-- FOOTER -->
+<footer>
+    <div class="content">
+        <div id="footer_top">
+            <div id="footer_main">
+                <img src="assets/sygnet1.png" alt="Logo koduj.com"/>
+
+                <div id="motto">
+                    <div id="motto1">Programowanie to przyszłość.</div>
+                    <div id="motto2">Zacznij z nami!</div>
+                </div>
+            </div>
+
+            <div id="social">
+                <span id="find_us">Znajdziesz nas</span>
+
+
+                        <span id="facebook">
+                            <a target="_blank" href="https://www.facebook.com/kodujcom"><img src="assets/facebook.png"
+                                                                                             alt="Facebook"/></a>
+                        </span>
+						<!--
+                        <span id="twitter">
+                            <a target="_blank" href=""><img src="assets/twitter.png" alt="Twitter"/></a>
+                        </span>
+						-->
+                        <span id="youtube">
+                            <a target="_blank" href="https://www.youtube.com/channel/UCKb10KVB1XCVYnnGEaXmP_Q"><img
+                                    src="assets/youtube.png" alt="YouTube"/></a>
+                        </span>
+
+                        <span id="google_plus">
+                            <a target="_blank" href="https://plus.google.com/100919679106265815714"><img src="assets/googleplus.png" alt="Google Plus"/></a>
+                        </span>
+            </div>
+        </div>
+
+        <div id="footer_bottom">
+            <nav id="footer_nav">
+                <ul>
+                    <li id="about_us"><a href="">O nas</a></li>
+
+                    <!-- For further development
+                    <li id="team"><a href="">Zespół</a></li>
+                    <li id="contact"><a href="">Kontakt</a></li>
+                    <li id="blog"><a href="">Blog</a></li>
+                    !-->
+
+                </ul>
+            </nav>
+
+            <div id="contact"><a href="mailto:kontakt@koduj.com" style="color: white">kontakt@koduj.com</a></div>
+        </div>
+
+    </div>
+    <div id="footer_green_bar"></div>
+
+</footer>
+
+</div>
+
+</body>
+</html>
